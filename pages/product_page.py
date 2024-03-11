@@ -21,17 +21,23 @@ class ProductPage(BasePage):
         self.price_in_basket_matches_product_price(self.get_price())
 
     def should_be_message_of_success(self):
-        assert "has been added to your basket." in self.browser.find_element(
-            *ProductPageLocators.SUCCESS_MESSAGE).text, "Wrong message about adding product to the card or the message is missing"
+        assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is missing"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(
+            *ProductPageLocators.SUCCESS_MESSAGE), "Success message is presented, but should not be"
 
     def product_name_should_be_in_message(self, product_name):
         assert product_name == self.browser.find_element(
             *ProductPageLocators.PRODUCT_NAME_IN_MESSAGE).text, "Wrong product name in the message"
 
     def should_be_message_basket_total(self):
-        assert "Your basket total is now" in self.browser.find_element(
-            *ProductPageLocators.MESSAGE_BASKET_TOTAL).text, "Wrong message about basket total or the message is missing"
+        assert self.is_element_present(
+            *ProductPageLocators.MESSAGE_BASKET_TOTAL), "Basket total message is missing"
 
     def price_in_basket_matches_product_price(self, price):
         assert price == self.browser.find_element(
             *ProductPageLocators.BASKET_TOTAL).text, "The price doesn't match"
+
+    def success_message_is_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Success message wasn't disappeared"
