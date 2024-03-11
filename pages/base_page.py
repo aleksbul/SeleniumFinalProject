@@ -44,6 +44,10 @@ class BasePage():
 
         return True
 
+    def go_to_basket(self):
+        link = self.browser.find_element(*BasePageLocators.BASKET_BUTTON)
+        link.click()
+
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
